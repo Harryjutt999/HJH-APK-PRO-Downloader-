@@ -1,0 +1,192 @@
+/* CSS Variables for Theming (Light & Dark Mode) */
+:root {
+    --font-family: 'Inter', sans-serif;
+    
+    /* Light Theme */
+    --bg-color-light: #f4f7fc;
+    --container-bg-light: rgba(255, 255, 255, 0.6);
+    --text-color-light: #1a202c;
+    --subtext-color-light: #4a5568;
+    --border-color-light: #e2e8f0;
+    --primary-color-light: #4f46e5;
+    --primary-hover-light: #4338ca;
+    --shadow-color-light: rgba(79, 70, 229, 0.2);
+    --skeleton-bg-light: #e2e8f0;
+
+    /* Dark Theme */
+    --bg-color-dark: #111827;
+    --container-bg-dark: rgba(31, 41, 55, 0.6);
+    --text-color-dark: #f9fafb;
+    --subtext-color-dark: #9ca3af;
+    --border-color-dark: #374151;
+    --primary-color-dark: #6366f1;
+    --primary-hover-dark: #818cf8;
+    --shadow-color-dark: rgba(99, 102, 241, 0.2);
+    --skeleton-bg-dark: #374151;
+}
+
+[data-theme="light"] {
+    --bg-color: var(--bg-color-light);
+    --container-bg: var(--container-bg-light);
+    --text-color: var(--text-color-light);
+    --subtext-color: var(--subtext-color-light);
+    --border-color: var(--border-color-light);
+    --primary-color: var(--primary-color-light);
+    --primary-hover: var(--primary-hover-light);
+    --shadow-color: var(--shadow-color-light);
+    --skeleton-bg: var(--skeleton-bg-light);
+}
+
+[data-theme="dark"] {
+    --bg-color: var(--bg-color-dark);
+    --container-bg: var(--container-bg-dark);
+    --text-color: var(--text-color-dark);
+    --subtext-color: var(--subtext-color-dark);
+    --border-color: var(--border-color-dark);
+    --primary-color: var(--primary-color-dark);
+    --primary-hover: var(--primary-hover-dark);
+    --shadow-color: var(--shadow-color-dark);
+    --skeleton-bg: var(--skeleton-bg-dark);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.aurora-background {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; overflow: hidden;
+}
+.aurora-background::before, .aurora-background::after {
+    content: ''; position: absolute; width: 800px; height: 800px;
+    border-radius: 50%; filter: blur(150px); opacity: 0.3;
+    animation: move 20s infinite alternate;
+}
+.aurora-background::before { background: #6366f1; top: -20%; left: -20%; }
+.aurora-background::after { background: #ec4899; bottom: -20%; right: -20%; animation-delay: -10s; }
+@keyframes move {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to { transform: translate(100px, 200px) rotate(180deg); }
+}
+
+.container {
+    background: var(--container-bg); backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border-color);
+    border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 550px; width: 100%; text-align: center;
+    animation: fadeIn 1s ease-out; position: relative; z-index: 1; margin: 20px 0;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.theme-switch-wrapper { position: absolute; top: 20px; right: 20px; display: flex; align-items: center; }
+.theme-switch { display: inline-block; height: 24px; position: relative; width: 50px; }
+.theme-switch input { display: none; }
+.slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 24px; }
+.slider:before { background-color: #fff; bottom: 4px; content: ""; height: 16px; left: 4px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(26px); }
+
+.logo { font-size: 2.5em; font-weight: 700; color: var(--text-color); margin-bottom: 8px; }
+.logo span { background: linear-gradient(45deg, var(--primary-color), var(--primary-hover)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.subtitle { color: var(--subtext-color); margin-bottom: 35px; font-size: 1.1em; }
+
+.input-group { margin-bottom: 25px; position: relative; }
+.search-input {
+    width: 100%; padding: 16px 20px 16px 50px; border: 1px solid var(--border-color);
+    border-radius: 12px; font-size: 16px; outline: none; transition: all 0.3s ease;
+    background-color: transparent; color: var(--text-color);
+}
+.search-input::placeholder { color: var(--subtext-color); }
+.search-input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px var(--shadow-color); }
+.input-group::before { content: '🔍'; position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; color: var(--subtext-color); }
+
+.action-btn {
+    width: 100%; padding: 16px 30px; background-color: var(--primary-color);
+    color: white; border: none; border-radius: 12px; font-size: 18px;
+    font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-bottom: 20px;
+}
+.action-btn:hover:not(:disabled) { background-color: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px var(--shadow-color); }
+.action-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.results-container { margin-top: 20px; text-align: left; max-height: 380px; overflow-y: auto; padding-right: 10px; }
+.results-container::-webkit-scrollbar { width: 6px; }
+.results-container::-webkit-scrollbar-track { background: transparent; }
+.results-container::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 6px; }
+
+.apk-item {
+    background: var(--container-bg); border-radius: 16px; padding: 20px;
+    margin-bottom: 15px; border: 1px solid var(--border-color);
+    transition: all 0.3s ease; animation: resultFadeIn 0.5s ease-out forwards; opacity: 0;
+}
+@keyframes resultFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.apk-item:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); border-color: var(--primary-color); }
+
+.apk-header { display: flex; align-items: center; margin-bottom: 15px; }
+.apk-icon { width: 50px; height: 50px; border-radius: 12px; margin-right: 15px; object-fit: cover; background-color: var(--skeleton-bg); }
+.apk-name { font-weight: 600; color: var(--text-color); font-size: 1.15em; }
+.apk-details { font-size: 0.9em; color: var(--subtext-color); margin-bottom: 15px; line-height: 1.6; }
+.apk-download-btn {
+    background-color: #22c55e; color: white; border: none; padding: 10px 20px;
+    border-radius: 10px; cursor: pointer; font-size: 0.95em; font-weight: 600;
+    transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+}
+.apk-download-btn:hover { background-color: #16a34a; transform: translateY(-2px); }
+
+.status-message { padding: 15px; border-radius: 10px; margin-top: 20px; display: none; animation: fadeIn 0.5s; border: 1px solid; }
+.status-message.error { color: #991b1b; background-color: #fef2f2; border-color: #fecaca; }
+.status-message.success { color: #14532d; background-color: #f0fdf4; border-color: #bbf7d0; }
+
+.footer { margin-top: 30px; text-align: center; }
+.whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 10px; background: #25d366;
+    color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none;
+    font-weight: 600; transition: all 0.3s ease; margin-bottom: 15px;
+}
+.whatsapp-btn:hover { background: #128c7e; transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2); }
+.powered-by { color: var(--subtext-color); font-size: 0.9em; }
+
+/* --- SKELETON LOADER --- */
+.skeleton {
+    opacity: 0.7;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+@keyframes skeleton-loading {
+    from { background-color: var(--skeleton-bg); }
+    to { background-color: var(--border-color); }
+}
+.skeleton .apk-icon { background-color: var(--skeleton-bg); }
+.skeleton .skeleton-text {
+    width: 70%; height: 20px; margin-bottom: 10px;
+    border-radius: 4px; background-color: var(--skeleton-bg);
+}
+.skeleton .skeleton-text-sm {
+    width: 50%; height: 16px;
+    border-radius: 4px; background-color: var(--skeleton-bg);
+}
+.skeleton .skeleton-btn {
+    width: 120px; height: 40px;
+    border-radius: 10px; background-color: var(--skeleton-bg);
+}
+
+@media (max-width: 600px) {
+    body { padding: 10px; align-items: flex-start; }
+    .container { padding: 25px; margin: 10px 0; }
+    .logo { font-size: 2em; }
+}
